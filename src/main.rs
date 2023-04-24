@@ -1,6 +1,6 @@
 mod Mancala;
 use Mancala::*;
 
-fn main(){
-playGame();
+fn main() {
+    playGame();
 }
