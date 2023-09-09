@@ -94,7 +94,7 @@ pub fn getMove() -> usize {
         let input: Result<usize, _> = try_read!();
         // Check if the input was valid
         match input {
-            Ok(pit_index) if pit_index >= 0 && pit_index < Board_Size as usize / 2 - 1 => {
+            Ok(pit_index) if (0..Board_Size / 2 - 1).contains(&pit_index) => {
                 // Return the selected pit index if it's valid
                 return pit_index;
             }
@@ -120,12 +120,12 @@ pub fn moveRocks(game_state: &mut GameState, pitI: usize) {
         i = pitI;
         for _ in 0..numRocks {
             // Increment the i to move to the next pit
-            i = (i + 1) % Board_Size as usize;
+            i = (i + 1) % Board_Size;
             // Skip the opponent's mancala
             if i == game_state.player2.mancala_index && board.activePlayer == 1 {
-                i = (i + 1) % Board_Size as usize;
+                i = (i + 1) % Board_Size;
             } else if i == game_state.player1.mancala_index && board.activePlayer == 2 {
-                i = (i + 1) % Board_Size as usize;
+                i = (i + 1) % Board_Size;
             }
             // Add a stone to the current pit
             board.pits[i] += 1;
@@ -140,7 +140,7 @@ pub fn moveRocks(game_state: &mut GameState, pitI: usize) {
 // Define a function to check for captures
 pub fn captures(game_state: &mut GameState, lastI: usize) {
     let board = &mut game_state.board;
-    let numPits = Board_Size as usize / 2 - 1;
+    let numPits = Board_Size / 2 - 1;
     let i = lastI;
     let activePlayer = board.activePlayer;
     let activeMancala = if activePlayer == 1 {
@@ -163,9 +163,9 @@ pub fn captures(game_state: &mut GameState, lastI: usize) {
 
 // Define a function to check the game's status
 pub fn checkStatus(board: &mut Board) -> GameStatus {
-    let numPits = Board_Size as usize / 2 - 1;
+    let numPits = Board_Size / 2 - 1;
     let p1_pits: &[i8] = &board.pits[..numPits];
-    let p2_pits: &[i8] = &board.pits[numPits + 1..Board_Size as usize - 1];
+    let p2_pits: &[i8] = &board.pits[numPits + 1..Board_Size - 1];
     let p1_sum: i8 = p1_pits.iter().sum();
     let p2_sum: i8 = p2_pits.iter().sum();
     if p1_sum == 0 || p2_sum == 0 {
@@ -174,20 +174,20 @@ pub fn checkStatus(board: &mut Board) -> GameStatus {
             board.pits[numPits] += board.pits[i];
             board.pits[i] = 0;
         }
-        for i in numPits + 1..Board_Size as usize - 1 {
-            board.pits[Board_Size as usize - 1] += board.pits[i];
+        for i in numPits + 1..Board_Size - 1 {
+            board.pits[Board_Size - 1] += board.pits[i];
             board.pits[i] = 0;
         }
         // Determine winner based on number of stones in each player's mancala
-        if board.pits[numPits] > board.pits[Board_Size as usize - 1] {
-            return GameStatus::GameOver(Winner::Player1);
-        } else if board.pits[numPits] < board.pits[Board_Size as usize - 1] {
+        if board.pits[numPits] > board.pits[Board_Size - 1] {
+            GameStatus::GameOver(Winner::Player1)
+        } else if board.pits[numPits] < board.pits[Board_Size - 1] {
             return GameStatus::GameOver(Winner::Player2);
         } else {
             return GameStatus::GameOver(Winner::Tie);
         }
     } else {
-        return GameStatus::InProgress;
+        GameStatus::InProgress
     }
 }
 
