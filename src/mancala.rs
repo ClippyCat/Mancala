@@ -172,11 +172,11 @@ pub fn checkStatus(board: &Board) -> GameStatus {
         }
         // Determine winner based on number of stones in each player's mancala
         if board.pits[numPits] > board.pits[Board_Size as usize - 1] {
-            return GameStatus::GameOver(player1);
+            return GameStatus::GameOver(Winner::Player1);
         } else if board.pits[numPits] < board.pits[Board_Size as usize - 1] {
-            return GameStatus::GameOver(player2);
+            return GameStatus::GameOver(Winner::Player2);
         } else {
-            return GameStatus::GameOver(tie);
+            return GameStatus::GameOver(Winner::Tie);
         }
     } else {
         return GameStatus::InProgress;
