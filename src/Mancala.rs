@@ -15,12 +15,14 @@ struct Player {
 }
 
 // Define an enum for the game status
+#[derive(PartialEq)]
 enum GameStatus {
     InProgress,
     GameOver(Winner),
 }
 
 // Define an enum to decide winner
+#[derive(PartialEq)]
 enum Winner {
     player1,
     player2,
