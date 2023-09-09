@@ -109,13 +109,15 @@ pub fn getMove() -> usize {
 
 // Define a function to distribute the stones
 pub fn moveRocks(game_state: &mut GameState, pitI: usize) {
-		let mut board = game_state.board;
+	let mut i = pitI;
+	{
+		let board = &mut game_state.board;
     // Get the number of stones in the selected pit
     let numRocks = board.pits[pitI];
     // Set the selected pit to zero stones
     board.pits[pitI] = 0;
     // Distribute the stones around the board
-    let mut i = pitI;
+		i = pitI;
     for _ in 0..numRocks {
         // Increment the i to move to the next pit
         i = (i + 1) % Board_Size as usize;
@@ -128,17 +130,18 @@ pub fn moveRocks(game_state: &mut GameState, pitI: usize) {
         // Add a stone to the current pit
         board.pits[i] += 1;
     }
+	}
     // Check for captures
-    captures(&mut game_state, i);
+    captures(game_state, i);
     // Check the game status
-    game_state.status = checkStatus(&mut board);
+    game_state.status = checkStatus(&mut game_state.board);
 }
 
 // Define a function to check for captures
 pub fn captures(game_state: &mut GameState, lastI: usize) {
-	let mut board = &mut game_state.board;
+	let board = &mut game_state.board;
     let numPits = Board_Size as usize / 2 - 1;
-    let mut i = lastI;
+    let i = lastI;
     let activePlayer = board.activePlayer;
 		let activeMancala = if activePlayer == 1 {
 			game_state.player1.mancala_index
