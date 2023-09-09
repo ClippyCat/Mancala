@@ -1,4 +1,4 @@
-use crate::mancala::*;
+
 
 #[test]
 fn testI0() {

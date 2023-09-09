@@ -80,7 +80,7 @@ pub fn displayBoard(board: &Board) {
 
     println!();
 
-    for i in (0..Board_Size / 2 - 1) {
+    for i in 0..Board_Size / 2 - 1 {
         print!("{:3}", board.pits[i]);
     }
     println!("({})", board.pits[Board_Size / 2 - 1]);
