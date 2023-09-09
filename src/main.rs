@@ -1,4 +1,5 @@
 mod mancala;
+#[cfg(test)]
 mod tests;
 use mancala::*;
 
