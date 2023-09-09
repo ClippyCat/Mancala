@@ -129,13 +129,14 @@ pub fn moveRocks(game_state: &mut GameState, pitI: usize) {
         board.pits[i] += 1;
     }
     // Check for captures
-    captures(&mut board, i);
+    captures(&mut game_state, i);
     // Check the game status
     game_state.status = checkStatus(&board);
 }
 
 // Define a function to check for captures
-pub fn captures(board: &mut Board, lastI: usize) {
+pub fn captures(game_state: &mut GameState, lastI: usize) {
+	let mut board = game_state.board;
     let numPits = Board_Size as usize / 2 - 1;
     let mut i = lastI;
     let activePlayer = board.activePlayer;
