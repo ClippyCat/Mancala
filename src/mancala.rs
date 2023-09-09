@@ -72,19 +72,19 @@ pits[Board_Size/2-1]=0;
 
 // Define a function to display the board
 pub fn displayBoard(board: &Board) {
-    // Print the second player's pits in reverse order
-    for i in (0..(Board_Size / 2 - 1)).rev() {
-        print!("{:3}", board.pits[i]);
-    }
-    // Print the second player's mancala
-    println!("{:3}", board.pits[Board_Size / 2 - 1]);
-    // Print the first player's mancala
-    print!("{:3}", board.pits[Board_Size - 1]);
-    // Print the first player's pits
+
+    print!("({})", board.pits[Board_Size - 1]);
     for i in (Board_Size / 2..Board_Size - 1).rev() {
         print!("{:3}", board.pits[i]);
     }
+
     println!();
+
+    for i in (0..Board_Size / 2 - 1) {
+        print!("{:3}", board.pits[i]);
+    }
+    println!("({})", board.pits[Board_Size / 2 - 1]);
+
 }
 
 // Define a function to handle player input
