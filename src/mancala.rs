@@ -140,6 +140,11 @@ pub fn captures(game_state: &mut GameState, lastI: usize) {
     let numPits = Board_Size as usize / 2 - 1;
     let mut i = lastI;
     let activePlayer = board.activePlayer;
+		let activeMancala = if activePlayer == 1 {
+			game_state.player1.mancala_index
+			} else {
+				game_state.player2.mancala_index
+			};
     if board.pits[i] == 1
         && i != game_state.player1.mancala_index
         && i != game_state.player2.mancala_index
@@ -148,7 +153,7 @@ pub fn captures(game_state: &mut GameState, lastI: usize) {
         let canCapture = board.pits[opposite];
         if i < numPits && activePlayer == 1 || i > numPits && activePlayer == 2 {
             board.pits[opposite] = 0;
-            board.pits[activePlayer.mancala_index()] += canCapture;
+            board.pits[activeMancala] += canCapture;
         }
     }
 }
