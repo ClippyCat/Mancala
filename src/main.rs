@@ -1,4 +1,5 @@
 mod mancala;
+mod tests;
 use mancala::*;
 
 fn main() {

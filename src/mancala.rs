@@ -1,11 +1,11 @@
 use text_io::try_read;
 
-const Board_Size: usize = 12;
+pub const Board_Size: usize = 12;
 
 // Define a struct for the game's board
 pub struct Board {
-    pits: [i8; Board_Size], //pits+mancalas
-    activePlayer: u8,       // keep track of the active player
+    pub pits: [i8; Board_Size], //pits+mancalas
+    pub activePlayer: u8,       // keep track of the active player
 }
 impl Default for Board {
     fn default() -> Board {
@@ -37,21 +37,21 @@ enum Winner {
 
 // Define a struct for the game state
 pub struct GameState {
-    board: Board,
-    player1: Player,
-    player2: Player,
-    status: GameStatus,
+    pub board: Board,
+    pub player1: Player,
+    pub player2: Player,
+    pub status: GameStatus,
 }
 impl Default for GameState {
     fn default() -> GameState {
         GameState {
             player1: Player {
                 name: "Player 1".to_string(),
-                mancala_index: 0,
+                mancala_index: 5,
             },
             player2: Player {
                 name: "Player 2".to_string(),
-                mancala_index: 6,
+                mancala_index: 11,
             },
             status: GameStatus::InProgress,
             board: Board::default(),
@@ -62,7 +62,9 @@ impl Default for GameState {
 // Define a function to initialize the game's board
 pub fn init_board(numRocks: i8) -> Board {
     // Set up the board with the correct number of stones in each pit and mancala
-    let pits = [numRocks; Board_Size];
+    let mut pits = [numRocks; Board_Size];
+pits[Board_Size-1]=0;
+pits[Board_Size/2-1]=0;
     // Set player 1 as the active player
     let activePlayer = 1;
     Board { pits, activePlayer }
