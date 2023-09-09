@@ -1,8 +1,8 @@
-const Board_Size: i8 = 12;
+const Board_Size: usize = 12;
 
 // Define a struct for the game's board
 struct Board {
-    pits: [usize; Board_Size], //pits+mancalas
+    pits: [i8; Board_Size], //pits+mancalas
     activePlayer: u8,       // keep track of the active player
 }
 
