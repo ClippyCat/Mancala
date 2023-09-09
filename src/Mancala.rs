@@ -30,9 +30,9 @@ enum GameStatus {
 // Define an enum to decide winner
 #[derive(PartialEq)]
 enum Winner {
-    player1,
-    player2,
-    tie,
+    Player1,
+    Player2,
+    Tie,
 }
 
 // Define a struct for the game state
