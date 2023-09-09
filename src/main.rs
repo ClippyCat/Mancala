@@ -2,5 +2,6 @@ mod Mancala;
 use Mancala::*;
 
 fn main() {
-    playGame();
+		let status = GameState::default();
+    playGame(status);
 }

@@ -36,7 +36,7 @@ enum Winner {
 }
 
 // Define a struct for the game state
-struct GameState {
+pub struct GameState {
     board: Board,
     player1: Player,
     player2: Player,
