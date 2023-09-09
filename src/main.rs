@@ -1,6 +1,7 @@
-mod Mancala;
-use Mancala::*;
+mod mancala;
+use mancala::*;
 
 fn main() {
-    playGame();
+    let status = GameState::default();
+    playGame(status);
 }
