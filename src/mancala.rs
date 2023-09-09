@@ -3,7 +3,7 @@ use text_io::try_read;
 const Board_Size: usize = 12;
 
 // Define a struct for the game's board
-struct Board {
+pub struct Board {
     pits: [i8; Board_Size], //pits+mancalas
     activePlayer: u8,       // keep track of the active player
 }
@@ -14,14 +14,14 @@ impl Default for Board {
 }
 
 // Define a struct for the player information
-struct Player {
+pub struct Player {
     name: String,
     mancala_index: usize, // the index of the player's mancala on the board
 }
 
 // Define an enum for the game status
 #[derive(PartialEq, Default)]
-enum GameStatus {
+pub enum GameStatus {
 		#[default]
     InProgress,
     GameOver(Winner),
