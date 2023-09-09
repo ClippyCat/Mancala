@@ -1,3 +1,5 @@
+use text_io::try_read;
+
 const Board_Size: usize = 12;
 
 // Define a struct for the game's board
@@ -65,7 +67,7 @@ pub fn getMove() -> usize {
         // Prompt the current player to select a pit to move stones from
         println!("Enter the index of the pit you want to move stones from:");
         // Use the text_io crate to read input from the terminal
-        let input: Result<usize, _> = read!();
+        let input: Result<usize, _> = try_read!();
         // Check if the input was valid
         match input {
             Ok(pit_index) if pit_index >= 0 && pit_index < Board_Size as usize / 2 - 1 => {
