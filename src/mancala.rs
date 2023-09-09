@@ -108,7 +108,8 @@ pub fn getMove() -> usize {
 }
 
 // Define a function to distribute the stones
-pub fn moveRocks(board: &mut Board, pitI: usize) {
+pub fn moveRocks(state: &mut GameState, pitI: usize) {
+		let mut board = state.board;
     // Get the number of stones in the selected pit
     let numRocks = board.pits[pitI];
     // Set the selected pit to zero stones
@@ -128,9 +129,9 @@ pub fn moveRocks(board: &mut Board, pitI: usize) {
         board.pits[i] += 1;
     }
     // Check for captures
-    captures(board, i);
+    captures(&mut board, i);
     // Check the game status
-    board.status = checkStatus(board);
+    state.status = checkStatus(&board);
 }
 
 // Define a function to check for captures
@@ -190,7 +191,7 @@ pub fn playGame(mut state: GameState) {
         // Get the current player's move
         let pit_index = getMove();
         // Move the rocks from the selected pit
-        moveRocks(&mut state.board, pit_index);
+        moveRocks(&mut state, pit_index);
         // Switch to the other player
         state.board.activePlayer = 3 - state.board.activePlayer;
     }
