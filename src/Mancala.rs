@@ -7,6 +7,11 @@ struct Board {
     pits: [i8; Board_Size], //pits+mancalas
     activePlayer: u8,       // keep track of the active player
 }
+impl Default for Board {
+	fn default() -> Board {
+		init_board(6)
+	}
+}
 
 // Define a struct for the player information
 struct Player {
@@ -15,8 +20,9 @@ struct Player {
 }
 
 // Define an enum for the game status
-#[derive(PartialEq)]
+#[derive(PartialEq, Default)]
 enum GameStatus {
+		#[default]
     InProgress,
     GameOver(Winner),
 }
@@ -35,6 +41,22 @@ struct GameState {
     player1: Player,
     player2: Player,
     status: GameStatus,
+}
+impl Default for GameState {
+	fn default() -> GameState {
+		GameState {
+			player1: Player {
+				name: "Player 1".to_string(),
+				mancala_index: 0,
+			},
+			player2: Player {
+				name: "Player 2".to_string(),
+				mancala_index: 6
+			},
+			status: GameStatus::InProgress,
+			board: Board::default(),
+		}
+	}
 }
 
 // Define a function to initialize the game's board
