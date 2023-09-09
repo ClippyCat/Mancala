@@ -8,9 +8,9 @@ pub struct Board {
     activePlayer: u8,       // keep track of the active player
 }
 impl Default for Board {
-	fn default() -> Board {
-		init_board(6)
-	}
+    fn default() -> Board {
+        init_board(6)
+    }
 }
 
 // Define a struct for the player information
@@ -22,7 +22,7 @@ pub struct Player {
 // Define an enum for the game status
 #[derive(PartialEq, Default)]
 pub enum GameStatus {
-		#[default]
+    #[default]
     InProgress,
     GameOver(Winner),
 }
@@ -43,20 +43,20 @@ pub struct GameState {
     status: GameStatus,
 }
 impl Default for GameState {
-	fn default() -> GameState {
-		GameState {
-			player1: Player {
-				name: "Player 1".to_string(),
-				mancala_index: 0,
-			},
-			player2: Player {
-				name: "Player 2".to_string(),
-				mancala_index: 6
-			},
-			status: GameStatus::InProgress,
-			board: Board::default(),
-		}
-	}
+    fn default() -> GameState {
+        GameState {
+            player1: Player {
+                name: "Player 1".to_string(),
+                mancala_index: 0,
+            },
+            player2: Player {
+                name: "Player 2".to_string(),
+                mancala_index: 6,
+            },
+            status: GameStatus::InProgress,
+            board: Board::default(),
+        }
+    }
 }
 
 // Define a function to initialize the game's board
@@ -109,28 +109,28 @@ pub fn getMove() -> usize {
 
 // Define a function to distribute the stones
 pub fn moveRocks(game_state: &mut GameState, pitI: usize) {
-	let mut i = pitI;
-	{
-		let board = &mut game_state.board;
-    // Get the number of stones in the selected pit
-    let numRocks = board.pits[pitI];
-    // Set the selected pit to zero stones
-    board.pits[pitI] = 0;
-    // Distribute the stones around the board
-		i = pitI;
-    for _ in 0..numRocks {
-        // Increment the i to move to the next pit
-        i = (i + 1) % Board_Size as usize;
-        // Skip the opponent's mancala
-        if i == game_state.player2.mancala_index && board.activePlayer == 1 {
+    let mut i = pitI;
+    {
+        let board = &mut game_state.board;
+        // Get the number of stones in the selected pit
+        let numRocks = board.pits[pitI];
+        // Set the selected pit to zero stones
+        board.pits[pitI] = 0;
+        // Distribute the stones around the board
+        i = pitI;
+        for _ in 0..numRocks {
+            // Increment the i to move to the next pit
             i = (i + 1) % Board_Size as usize;
-        } else if i == game_state.player1.mancala_index && board.activePlayer == 2 {
-            i = (i + 1) % Board_Size as usize;
+            // Skip the opponent's mancala
+            if i == game_state.player2.mancala_index && board.activePlayer == 1 {
+                i = (i + 1) % Board_Size as usize;
+            } else if i == game_state.player1.mancala_index && board.activePlayer == 2 {
+                i = (i + 1) % Board_Size as usize;
+            }
+            // Add a stone to the current pit
+            board.pits[i] += 1;
         }
-        // Add a stone to the current pit
-        board.pits[i] += 1;
     }
-	}
     // Check for captures
     captures(game_state, i);
     // Check the game status
@@ -139,15 +139,15 @@ pub fn moveRocks(game_state: &mut GameState, pitI: usize) {
 
 // Define a function to check for captures
 pub fn captures(game_state: &mut GameState, lastI: usize) {
-	let board = &mut game_state.board;
+    let board = &mut game_state.board;
     let numPits = Board_Size as usize / 2 - 1;
     let i = lastI;
     let activePlayer = board.activePlayer;
-		let activeMancala = if activePlayer == 1 {
-			game_state.player1.mancala_index
-			} else {
-				game_state.player2.mancala_index
-			};
+    let activeMancala = if activePlayer == 1 {
+        game_state.player1.mancala_index
+    } else {
+        game_state.player2.mancala_index
+    };
     if board.pits[i] == 1
         && i != game_state.player1.mancala_index
         && i != game_state.player2.mancala_index
