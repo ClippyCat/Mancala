@@ -1,5 +1,3 @@
-
-
 #[test]
 fn testI0() {
 let mut state = GameState::default();
@@ -10,7 +8,7 @@ let mut state = GameState::default();
 
 #[test]
 fn testInit(){
-let b=init_board(6);
+	let b=init_board(6);
 	let exp: [i8; Board_Size] = [6, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 0];
 	assert_eq!(b.pits, exp, "bad board");
 }

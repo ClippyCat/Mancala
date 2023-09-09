@@ -4,5 +4,5 @@ use mancala::*;
 
 fn main() {
     let status = GameState::default();
-    playGame(status);
+    play_game(status);
 }
